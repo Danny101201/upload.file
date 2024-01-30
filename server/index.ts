@@ -1,7 +1,7 @@
 import express from 'express';
-import { getFile, uploadFile, uploadFiles } from './utils/s3';
+import { getS3File, uploadS3File, uploadS3Files } from './utils/s3';
 import multer, { MulterError } from 'multer'
-
+import cors from 'cors'
 // import 'dotenv/config'
 import dotenv from 'dotenv'
 dotenv.config({})
@@ -23,12 +23,13 @@ const upload = multer({
 })
 const app = express()
 app.use(express.json())
+app.use(cors())
 app.get('/', (req, res) => {
   return res.json('file upload api')
 })
 app.post('/signal', upload.single('avatar'), async (req, res) => {
   try {
-    const result = await uploadFile(req.file)
+    const result = await uploadS3File(req.file)
     return res.json({ status: 'success upload file', result })
   } catch (e) {
     console.log(e)
@@ -37,7 +38,7 @@ app.post('/signal', upload.single('avatar'), async (req, res) => {
 app.post('/multer', upload.array('photos', 4), async (req, res) => {
   try {
 
-    const uploadResults = await uploadFiles(req.files as Express.Multer.File[])
+    const uploadResults = await uploadS3Files(req.files as Express.Multer.File[])
     return res.json({ status: 'success upload files', result: uploadResults })
   } catch (e) {
     console.log(123)
@@ -48,9 +49,8 @@ app.post('/fields', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'pho
 })
 app.post('/file', async (req, res) => {
   const { id } = req.body
-  const data = await getFile(id)
+  const data = await getS3File(id)
   const blob = new Blob([data], { type: 'application/octet-stream' });
-  console.log(blob)
   return res.json({ status: 'success get object', blob })
 })
 

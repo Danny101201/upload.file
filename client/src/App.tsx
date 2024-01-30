@@ -1,33 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
+import { Button } from 'antd'
+import { UploadModal } from './components/UploadModal'
+import NiceModal from '@ebay/nice-modal-react';
+import { useEffect } from 'react';
+import { API } from './utils/api';
+import { RcFile } from 'antd/es/upload';
 
+const downloadTemplateUrl = new URL(
+  '/platform-bo-service/api/v1.0/member/housePlayer/resetPassword/batchByFile/downloadTemplate',
+  import.meta.env.VITE_API_DOMAIN,
+).href
 function App() {
-  const [count, setCount] = useState(0)
-
+  const onSubmit = async (file: RcFile) => {
+    console.log(file)
+  }
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Button type="primary" onClick={() => {
+        console.log(132)
+        NiceModal.show(UploadModal, { downloadTemplateUrl, onSubmit })
+      }}>+ reset member password</Button>
     </>
   )
 }

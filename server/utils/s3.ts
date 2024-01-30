@@ -2,7 +2,7 @@ import { PutObjectCommand, S3Client, GetObjectCommand } from "@aws-sdk/client-s3
 import { uuid } from "uuidv4"
 
 const s3CLient = new S3Client()
-export const uploadFile = async (file: Express.Multer.File | undefined) => {
+export const uploadS3File = async (file: Express.Multer.File | undefined) => {
   if (!file) return
   const putCommand = new PutObjectCommand({
     Bucket: process.env.S3_BUCKET,
@@ -17,7 +17,7 @@ export const uploadFile = async (file: Express.Multer.File | undefined) => {
   }
 }
 
-export const uploadFiles = async (files: Express.Multer.File[] | undefined) => {
+export const uploadS3Files = async (files: Express.Multer.File[] | undefined) => {
   try {
     if (!files) return
     const putCommands = files.map(file => new PutObjectCommand({
@@ -33,7 +33,7 @@ export const uploadFiles = async (files: Express.Multer.File[] | undefined) => {
   }
 }
 
-export const getFile = async (Key: string) => {
+export const getS3File = async (Key: string) => {
   try {
     const getCommand = new GetObjectCommand({
       Bucket: process.env.S3_BUCKET,
