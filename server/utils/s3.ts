@@ -6,7 +6,7 @@ export const uploadS3File = async (file: Express.Multer.File | undefined) => {
   if (!file) return
   const putCommand = new PutObjectCommand({
     Bucket: process.env.S3_BUCKET,
-    Key: `upload/${uuid()}-${file?.originalname}`,
+    Key: `test/${uuid()}-${file?.originalname}`,
     Body: file.buffer
   })
   try {

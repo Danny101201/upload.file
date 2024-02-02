@@ -18,6 +18,7 @@ export const UploadModal = NiceModal.create(({ downloadTemplateUrl, onSubmit }: 
     try {
       setLoading(true)
       await onSubmit(fileList[0] as RcFile)
+      modal.hide()
     } finally {
       setLoading(false)
     }
