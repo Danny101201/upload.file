@@ -8,6 +8,7 @@ import { API } from './utils/api';
 import { RcFile } from 'antd/es/upload';
 import { useUploadFile } from './hooks/useUploadFile';
 import { ZodError } from 'zod';
+import { UploadImage } from './components/UploadImage';
 
 const downloadTemplateUrl = new URL(
   '/platform-bo-service/api/v1.0/member/housePlayer/resetPassword/batchByFile/downloadTemplate',
@@ -37,6 +38,7 @@ function App() {
   }
   return (
     <>
+      <UploadImage />
       {contextHolder}
       <Button type="primary" onClick={() => {
         NiceModal.show(UploadModal, { downloadTemplateUrl, onSubmit })

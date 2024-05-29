@@ -22,12 +22,12 @@ const postResetPasswordBatchByFileResponse = z.object({
 type PostResetPasswordBatchByFileResponse = z.infer<
   typeof postResetPasswordBatchByFileResponse
 >;
-const postResetPasswordBatchByFile = async (file: RcFile) => {
-  const formData = new FormData();
+export const postResetPasswordBatchByFile = async (file: RcFile) => {
+  const formData = new FormData()
   formData.append('avatar', file)
   const { data } = await API.post<PostResetPasswordBatchByFileResponse>('/signal', formData, {
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'multipart/form-data'
     }
   })
   return postResetPasswordBatchByFileResponse.parseAsync(data)
